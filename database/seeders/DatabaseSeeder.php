@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Merchant;
 use App\Models\Shop;
 use App\Models\User;
@@ -17,5 +18,6 @@ class DatabaseSeeder extends Seeder
     {
         Merchant::factory(20)->create();
         Shop::factory(20)->create();
+        Category::factory(20)->create();
     }
 }

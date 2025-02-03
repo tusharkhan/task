@@ -13,69 +13,77 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset("css/bootstrap.css") }}">
+    <link rel="stylesheet" href="{{ asset("css/style.css") }}">
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <main class="">
+        <div class="container-fluid">
+            <div class="row">
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav me-auto">
-
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ms-auto">
-                    <!-- Authentication Links -->
-                    @if( !\Illuminate\Support\Facades\Auth::guard('merchant')->check() )
-                        @if (Route::has('merchant.login.get'))
+                <div class="col-md-2 col-lg-2 col-sm-2 ">
+                    <!-- Sidebar -->
+                    <div class="sidebar" id="sidebar">
+                        <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('merchant.login.get') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
-
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Merchant Register') }}</a>
-                            </li>
-                        @endif
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::guard('merchant')->user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('merchant.logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                <a class="nav-link collapsed" data-bs-toggle="collapse" aria-expanded="true" href="#usersMenu">
+                                    <i class="bi bi-people"></i> Store
+                                    <i class="bi bi-chevron-right ms-auto"></i>
+                                    <i class="bi bi-chevron-down ms-auto"></i>
                                 </a>
+                                <div class="collapse show" id="usersMenu">
+                                    <ul class="nav flex-column ps-3">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('merchant.store.list') }}">Store List</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('merchant.store.create') }}">Create Store</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link collapsed" aria-expanded="true" data-bs-toggle="collapse" href="#settingsMenu">
+                                    <i class="bi bi-gear"></i> Category
+                                    <i class="bi bi-chevron-right ms-auto"></i>
+                                    <i class="bi bi-chevron-down ms-auto"></i>
+                                </a>
+                                <div class="collapse show" id="settingsMenu">
+                                    <ul class="nav flex-column ps-3">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('merchant.category.list') }}">Category List</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('merchant.category.create') }}">Create Category</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="bi bi-file-earmark-bar-graph"></i> Reports
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-                                <form id="logout-form" action="{{ route('merchant.logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                    @endguest
-                </ul>
+                <div class="col-md-10 col-lg-10 col-sm-10">
+                    <div class="content" id="mainContent">
+                        @yield('content')
+                    </div>
+                </div>
+
             </div>
-        </div>
-    </nav>
 
-    <main class="py-4">
-        @yield('content')
+
+        </div>
     </main>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 <script src="{{ asset("js/bootstrap.js") }}"></script>
+
 </body>
 </html>

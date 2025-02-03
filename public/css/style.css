@@ -1,0 +1,28 @@
+.sidebar {
+    width: 150px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    background-color: #343a40;
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+}
+.sidebar.collapsed {
+    transform: translateX(-250px);
+}
+.main-content {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease-in-out;
+}
+.main-content.expanded {
+    margin-left: 0;
+}
+.nav-link {
+    color: #fff !important;
+}
+.nav-link.collapsed .bi-chevron-down {
+    display: none;
+}
+.nav-link:not(.collapsed) .bi-chevron-right {
+    display: none;
+}

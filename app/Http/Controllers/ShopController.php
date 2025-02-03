@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCreateRequest;
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ShopController extends Controller
 {
@@ -12,7 +16,8 @@ class ShopController extends Controller
      */
     public function index()
     {
-        //
+        $shops = Shop::query()->orderBy('id', 'desc')->paginate(10);
+        return view('merchant.shop.index', compact('shops'));
     }
 
     /**
@@ -20,15 +25,25 @@ class ShopController extends Controller
      */
     public function create()
     {
-        //
+        return view('merchant.shop.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCreateRequest $storeCreateRequest)
     {
-        //
+        $insertData = [
+            'name' => $storeCreateRequest->name,
+            'slug' => Str::slug($storeCreateRequest->name) . '-' . Str::random(10),
+            'password' => Hash::make($storeCreateRequest->password),
+            'merchant_id' => Auth::guard('merchant')->user()->merchant_id
+        ];
+
+        if (Shop::create($insertData))
+            return redirect()->route('merchant.shop.list')->with('success', 'Shop created successfully.');
+
+        return redirect()->route('shop.index')->with('error', 'Something went wrong.');
     }
 
     /**

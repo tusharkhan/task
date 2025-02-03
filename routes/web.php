@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MerchantAuth\LoginController;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,5 +26,13 @@ Route::prefix('merchant')->as('merchant.')->group( function () {
     Route::middleware('merchant')->group(function () {
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
         Route::get('/dashboard', [MerchantController::class, 'index'])->name('dashboard');
+
+        Route::get("/store-list", [ShopController::class, 'index'])->name('store.list');
+        Route::get("/create-store", [ShopController::class, 'create'])->name('store.create');
+        Route::post("/create-store", [ShopController::class, 'store'])->name('store.store');
+
+        Route::get("/category-list", [CategoryController::class, 'index'])->name('category.list');
+        Route::get("/create-category", [CategoryController::class, 'create'])->name('category.create');
+        Route::post("/create-category", [CategoryController::class, 'store'])->name('category.store');
     });
 });
