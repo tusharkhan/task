@@ -8,11 +8,13 @@ Route::get('/', function () {
 
 \Illuminate\Support\Facades\Auth::routes();
 
-Route::group(['prefix' => 'merchant', 'as' => 'merchant.'], function () {
-    Route::get('/login', [\App\Http\Controllers\MerchantAuth\LoginController::class, 'showLoginForm'])->name('login.get');
-    Route::post('/login', [\App\Http\Controllers\MerchantAuth\LoginController::class, 'login'])->name('login.post');
+Route::prefix('merchant')->as('merchant.')->group( function () {
+    Route::middleware('redirectIfNotMerchant')->group( function () {
+        Route::get('/login', [\App\Http\Controllers\MerchantAuth\LoginController::class, 'showLoginForm'])->name('login.get');
+        Route::post('/login', [\App\Http\Controllers\MerchantAuth\LoginController::class, 'login'])->name('login.post');
+    });
 
-    Route::group(['middleware' => 'auth:merchant'], function () {
+    Route::middleware('merchant')->group(function () {
         Route::post('/logout', [\App\Http\Controllers\MerchantAuth\LoginController::class, 'logout'])->name('logout');
         Route::get('/dashboard', [\App\Http\Controllers\MerchantController::class, 'index'])->name('dashboard');
     });

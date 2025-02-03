@@ -12,7 +12,7 @@ class MerchantController extends Controller
      */
     public function index()
     {
-        return "merchant dashboard";
+        return view("merchant.welcome");
     }
 
     /**
