@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Login') }}</div>
+                    <div class="card-header">Merchant {{ __('Login') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('merchant.login.post') }}">
                             @csrf
 
                             <div class="row mb-3">
@@ -26,7 +26,7 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                                <label for="password" class="col-md-4 col-form-label text-md-end">Shop {{ __('Password') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
@@ -46,11 +46,10 @@
                                         {{ __('Login') }}
                                     </button>
 
-                                    @if (Route::has('merchant.login.get'))
-                                        <a class="btn btn-info" href="{{ route('merchant.login.get') }}">
-                                            {{ __('Merchant Login') }}
-                                        </a>
-                                    @endif
+                                    <a class="btn btn-warning" href="{{ route('login') }}">
+                                        {{ __('Admin Login') }}
+                                    </a>
+
                                 </div>
                             </div>
                         </form>
