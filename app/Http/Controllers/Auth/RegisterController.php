@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Merchant;
+use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -50,8 +55,9 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'shop_name' => ['required', 'string', 'max:255', 'unique:shops,name'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:merchants,email'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
     }
 
@@ -63,10 +69,41 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $merchantData = [
             'name' => $data['name'],
-            'email' => $data['email'],
+            'email' => $data['email']
+        ];
+
+        $merchant = Merchant::create($merchantData);
+
+        $shopInformation = [
+            'merchant_id' => $merchant->id,
+            'name' => $data['shop_name'],
+            'slug' => Str::slug($data['shop_name']) . '-' . Str::random(10),
             'password' => Hash::make($data['password']),
-        ]);
+        ];
+
+        return Shop::create($shopInformation);
+    }
+
+    protected function guard()
+    {
+        return Auth::guard('merchant');
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $merchant = Merchant::where("email", $request->email)->first();
+
+        if ($merchant) {
+            return redirect()->back()->with('error', 'Email already exists');
+        }
+
+
+        if($this->create($request->all())){
+            return redirect()->route('merchant.login.get')->with('success', 'Register successfully');
+        }
     }
 }
