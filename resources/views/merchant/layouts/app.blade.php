@@ -59,9 +59,33 @@
                                     </ul>
                                 </div>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="bi bi-file-earmark-bar-graph"></i> Reports
+                                <a class="nav-link collapsed" aria-expanded="true" data-bs-toggle="collapse" href="#settingsMenu">
+                                    <i class="bi bi-gear"></i> Product
+                                    <i class="bi bi-chevron-right ms-auto"></i>
+                                    <i class="bi bi-chevron-down ms-auto"></i>
+                                </a>
+                                <div class="collapse show" id="settingsMenu">
+                                    <ul class="nav flex-column ps-3">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('merchant.product.list') }}">Product List</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('merchant.product.create') }}">Create Product</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('merchant.logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    <i class="bi bi-file-earmark-bar-graph"></i> Logout
+
+                                    <form id="logout-form" action="{{ route('merchant.logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
                                 </a>
                             </li>
                         </ul>

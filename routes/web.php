@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MerchantAuth\LoginController;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -34,5 +35,9 @@ Route::prefix('merchant')->as('merchant.')->group( function () {
         Route::get("/category-list", [CategoryController::class, 'index'])->name('category.list');
         Route::get("/create-category", [CategoryController::class, 'create'])->name('category.create');
         Route::post("/create-category", [CategoryController::class, 'store'])->name('category.store');
+
+        Route::get("/product-list", [ProductController::class, 'index'])->name('product.list');
+        Route::get("/create-product", [ProductController::class, 'create'])->name('product.create');
+        Route::post("/create-product", [ProductController::class, 'store'])->name('product.store');
     });
 });
