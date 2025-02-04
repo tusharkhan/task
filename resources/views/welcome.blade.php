@@ -5,27 +5,27 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Merchants') }}</div>
+                    <div class="card-header">{{ __('Shops') }}</div>
 
                     <div class="card-body">
 
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Merchant Name</th>
-                                    <th>Merchant Email</th>
+                                    <th>Shop Name</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($merchants as $merchant)
+                                @foreach($shops as $shop)
                                     <tr>
-                                        <td>{{$merchant->name ?? ''}}</td>
-                                        <td>{{$merchant->email ?? ''}}</td>
+                                        <td>
+                                            <a href="{{ url($shop->name.env('APP_URL')) }}" target="_blank">{{ $shop->name }}</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $merchants->links() }}
+                        {{ $shops->links() }}
                     </div>
                 </div>
             </div>

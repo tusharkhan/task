@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('merchant_id');
             $table->string('name')->unique();
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->string('password');
 
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');

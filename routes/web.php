@@ -10,7 +10,11 @@ use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index']);
+//Route::get('/', [HomeController::class, 'index']);
+
+Route::domain("{shop}.".env("APP_URL"))->group(function () {
+    Route::get('/', [HomeController::class, 'shopDetails']);
+});
 
 Auth::routes();
 

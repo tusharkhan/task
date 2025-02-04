@@ -35,7 +35,7 @@ class ShopController extends Controller
     {
         $insertData = [
             'name' => $storeCreateRequest->name,
-            'slug' => Str::slug($storeCreateRequest->name) . '-' . Str::random(10),
+            'slug' => Str::slug($storeCreateRequest->name, '_'),
             'password' => Hash::make($storeCreateRequest->password),
             'merchant_id' => Auth::guard('merchant')->user()->merchant_id
         ];
