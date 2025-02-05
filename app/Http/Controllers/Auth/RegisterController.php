@@ -79,7 +79,7 @@ class RegisterController extends Controller
         $shopInformation = [
             'merchant_id' => $merchant->id,
             'name' => $data['shop_name'],
-            'slug' => Str::slug($data['shop_name']) . '-' . Str::random(10),
+            'slug' => Str::slug($data['shop_name'], '_'),
             'password' => Hash::make($data['password']),
         ];
 
